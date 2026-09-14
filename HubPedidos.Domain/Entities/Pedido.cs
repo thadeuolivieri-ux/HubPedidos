@@ -12,8 +12,8 @@ public class Pedido
     public Endereco? EnderecoEntrega { get; private set; }
 
     // Construtor sem parâmetros para EF Core
-    private Pedido() 
-    { 
+    private Pedido()
+    {
         Regiao = string.Empty;
     }
 

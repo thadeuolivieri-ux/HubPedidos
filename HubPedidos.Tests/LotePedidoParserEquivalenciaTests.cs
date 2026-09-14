@@ -19,7 +19,7 @@ public class LotePedidoParserEquivalenciaTests
         {
             Assert.Equal(baseline[i].Regiao, otimizado[i].Regiao);
             Assert.Equal(baseline[i].Prioridade, otimizado[i].Prioridade);
-            
+
             var itemBase = baseline[i].Itens.First();
             var itemOtimizado = otimizado[i].Itens.First();
 

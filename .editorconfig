@@ -1,0 +1,12 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+csharp_style_expression_bodied_methods = true:refactoring
+dotnet_diagnostic.CA1062.severity = none
+dotnet_style_qualification_for_field = false:warning

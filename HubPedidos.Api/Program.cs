@@ -31,15 +31,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseOutputCache();
-
 app.MapHub<PedidosHub>("/hubs/pedidos");
 
-// Endpoint com ETag e Validação Condicional (304 Not Modified)
-app.MapGet("/api/v1/pedidos/{id:guid}/etag", async (Guid id, PedidoConsultaService service, HttpContext context) =>
+app.MapGet("/api/v1/pedidos/etag-demonstracao", (HttpContext context) =>
 {
-    var resumo = await service.ObterResumoCompiladoAsync(id);
-    if (resumo is null) return Results.NotFound();
-
+    var resumo = new PedidoResumoDto(Guid.Parse("11111111-1111-1111-1111-111111111111"), "SP", 5, 2, 250.00m);
     string etag = ETagHelper.GerarETag(resumo);
     string? ifNoneMatch = context.Request.Headers.IfNoneMatch;
 
@@ -50,26 +46,6 @@ app.MapGet("/api/v1/pedidos/{id:guid}/etag", async (Guid id, PedidoConsultaServi
 
     context.Response.Headers.ETag = etag;
     return Results.Ok(resumo);
-});
-
-// Endpoint público com OutputCache
-app.MapGet("/api/v1/pedidos/catalogo-publico", () =>
-{
-    var itens = new[]
-    {
-        new { ProdutoId = "PROD-100", Nome = "Teclado Mecânico", Preco = 250.00m },
-        new { ProdutoId = "PROD-200", Nome = "Mouse Gamer", Preco = 150.00m }
-    };
-
-    return Results.Ok(new { GeradoEm = DateTime.UtcNow, Itens = itens });
-}).CacheOutput("CachePublicoPedidos");
-
-// Endpoint para simulação de notificação SignalR
-app.MapPost("/api/v1/pedidos/{id:guid}/notificar", async (Guid id, IHubContext<PedidosHub, IPedidosClient> hubContext) =>
-{
-    var evento = new PedidoAtualizadoEvent(id, "EM_TRANSPORTE", 150.00m, DateTime.UtcNow);
-    await hubContext.Clients.Group($"Pedido_{id}").ReceberAtualizacaoPedido(evento);
-    return Results.Ok(new { mensagem = "Notificação enviada ao grupo com sucesso." });
 });
 
 app.MapGet("/api/v1/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaService service, HttpContext context) =>
@@ -152,3 +128,5 @@ app.MapGet("/api/fila/metricas", (QueueMetricsService metrics) =>
 });
 
 app.Run();
+
+public partial class Program { }

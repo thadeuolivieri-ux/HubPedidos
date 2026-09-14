@@ -1,0 +1,5 @@
+{
+  "HubPedidos.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/workspaces\/HubPedidos\/HubPedidos.Api",
+  "HubPedidos.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/workspaces\/HubPedidos\/HubPedidos.Application",
+  "HubPedidos.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/workspaces\/HubPedidos\/HubPedidos.Domain"
+}

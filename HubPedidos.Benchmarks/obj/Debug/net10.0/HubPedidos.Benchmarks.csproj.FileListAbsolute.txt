@@ -86,3 +86,6 @@
 /workspaces/HubPedidos/HubPedidos.Benchmarks/obj/Debug/net10.0/HubPedidos.Benchmarks.pdb
 /workspaces/HubPedidos/HubPedidos.Benchmarks/obj/Debug/net10.0/HubPedidos.Benchmarks.genruntimeconfig.cache
 /workspaces/HubPedidos/HubPedidos.Benchmarks/obj/Debug/net10.0/ref/HubPedidos.Benchmarks.dll
+/workspaces/HubPedidos/HubPedidos.Benchmarks/bin/Debug/net10.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/workspaces/HubPedidos/HubPedidos.Benchmarks/bin/Debug/net10.0/Microsoft.Extensions.FileProviders.Abstractions.dll
+/workspaces/HubPedidos/HubPedidos.Benchmarks/bin/Debug/net10.0/Microsoft.Extensions.Hosting.Abstractions.dll
