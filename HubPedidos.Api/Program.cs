@@ -1,36 +1,19 @@
 using System.Threading.Channels;
-using HubPedidos.Application.Data;
+using HubPedidos.Application;
 using HubPedidos.Application.DTOs;
 using HubPedidos.Application.Jobs;
 using HubPedidos.Application.Mappers;
 using HubPedidos.Application.Services;
 using HubPedidos.Domain.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
-builder.Services.AddSingleton<CatalogoProcessadores>();
 
-builder.Services.AddDbContext<HubPedidosDbContext>(options =>
-    options.UseSqlite("Data Source=hubpedidos.db"));
-
-builder.Services.AddScoped<PedidoConsultaService>();
-builder.Services.AddSingleton<QueueMetricsService>();
-
-// Configuração do Canal Limitado (Bounded Channel)
-var channel = Channel.CreateBounded<ProcessarPedidoJob>(new BoundedChannelOptions(capacity: 10)
-{
-    FullMode = BoundedChannelFullMode.Wait,
-    SingleReader = false,
-    SingleWriter = false
-});
-
-builder.Services.AddSingleton(channel);
-builder.Services.AddSingleton(channel.Reader);
-builder.Services.AddSingleton(channel.Writer);
-builder.Services.AddHostedService<PedidoQueueWorker>();
+// Invocação limpa do Composition Root por módulos
+builder.Services.AddApplicationModule();
+builder.Services.AddInfrastructureModule("Data Source=hubpedidos.db");
 
 var app = builder.Build();
 
@@ -38,6 +21,37 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+// Endpoint v1 - Legado (Contrato Mantido)
+app.MapGet("/api/v1/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaService service, HttpContext context) =>
+{
+    context.Response.Headers["Deprecation"] = "true";
+    context.Response.Headers["Sunset"] = "Wed, 31 Dec 2026 23:59:59 GMT";
+
+    var resumo = await service.ObterResumoCompiladoAsync(id);
+    return resumo is not null ? Results.Ok(resumo) : Results.NotFound();
+});
+
+// Endpoint v2 - Evoluído (Contrato v2)
+app.MapGet("/api/v2/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaService service) =>
+{
+    var resumoV1 = await service.ObterResumoCompiladoAsync(id);
+    if (resumoV1 is null) return Results.NotFound();
+
+    var taxa = resumoV1.ValorTotal * 0.05m;
+    var resumoV2 = new PedidoResumoV2Dto(
+        resumoV1.Id,
+        resumoV1.Regiao,
+        resumoV1.Prioridade,
+        resumoV1.QuantidadeTotalItens,
+        resumoV1.ValorTotal,
+        taxa,
+        resumoV1.ValorTotal + taxa,
+        "PROCESSADO"
+    );
+
+    return Results.Ok(resumoV2);
+});
 
 app.MapPost("/api/pedidos/processar", (CriarPedidoRequest request, CatalogoProcessadores catalogo) =>
 {
@@ -75,7 +89,7 @@ app.MapPost("/api/fila/pedidos", async (ProcessarPedidoJob job, ChannelWriter<Pr
     }
 
     metrics.IncrementRejeitados();
-    return Results.StatusCode(429); // 429 Too Many Requests (Backpressure / Fila cheia)
+    return Results.StatusCode(429);
 });
 
 app.MapGet("/api/fila/metricas", (QueueMetricsService metrics) =>
