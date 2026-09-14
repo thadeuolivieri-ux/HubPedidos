@@ -1,17 +1,25 @@
 using System.Threading.Channels;
+using HubPedidos.Api.Hubs;
 using HubPedidos.Application;
 using HubPedidos.Application.DTOs;
+using HubPedidos.Application.Events;
 using HubPedidos.Application.Jobs;
 using HubPedidos.Application.Mappers;
 using HubPedidos.Application.Services;
 using HubPedidos.Domain.Services;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.AddSignalR();
+builder.Services.AddOutputCache(options =>
+{
+    options.AddBasePolicy(b => b.Expire(TimeSpan.FromSeconds(30)));
+    options.AddPolicy("CachePublicoPedidos", b => b.Expire(TimeSpan.FromSeconds(60)).Tag("pedidos"));
+});
 
-// Invocação limpa do Composition Root por módulos
 builder.Services.AddApplicationModule();
 builder.Services.AddInfrastructureModule("Data Source=hubpedidos.db");
 
@@ -22,7 +30,48 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// Endpoint v1 - Legado (Contrato Mantido)
+app.UseOutputCache();
+
+app.MapHub<PedidosHub>("/hubs/pedidos");
+
+// Endpoint com ETag e Validação Condicional (304 Not Modified)
+app.MapGet("/api/v1/pedidos/{id:guid}/etag", async (Guid id, PedidoConsultaService service, HttpContext context) =>
+{
+    var resumo = await service.ObterResumoCompiladoAsync(id);
+    if (resumo is null) return Results.NotFound();
+
+    string etag = ETagHelper.GerarETag(resumo);
+    string? ifNoneMatch = context.Request.Headers.IfNoneMatch;
+
+    if (ETagHelper.ETagValida(ifNoneMatch, etag))
+    {
+        return Results.StatusCode(StatusCodes.Status304NotModified);
+    }
+
+    context.Response.Headers.ETag = etag;
+    return Results.Ok(resumo);
+});
+
+// Endpoint público com OutputCache
+app.MapGet("/api/v1/pedidos/catalogo-publico", () =>
+{
+    var itens = new[]
+    {
+        new { ProdutoId = "PROD-100", Nome = "Teclado Mecânico", Preco = 250.00m },
+        new { ProdutoId = "PROD-200", Nome = "Mouse Gamer", Preco = 150.00m }
+    };
+
+    return Results.Ok(new { GeradoEm = DateTime.UtcNow, Itens = itens });
+}).CacheOutput("CachePublicoPedidos");
+
+// Endpoint para simulação de notificação SignalR
+app.MapPost("/api/v1/pedidos/{id:guid}/notificar", async (Guid id, IHubContext<PedidosHub, IPedidosClient> hubContext) =>
+{
+    var evento = new PedidoAtualizadoEvent(id, "EM_TRANSPORTE", 150.00m, DateTime.UtcNow);
+    await hubContext.Clients.Group($"Pedido_{id}").ReceberAtualizacaoPedido(evento);
+    return Results.Ok(new { mensagem = "Notificação enviada ao grupo com sucesso." });
+});
+
 app.MapGet("/api/v1/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaService service, HttpContext context) =>
 {
     context.Response.Headers["Deprecation"] = "true";
@@ -32,7 +81,6 @@ app.MapGet("/api/v1/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaSer
     return resumo is not null ? Results.Ok(resumo) : Results.NotFound();
 });
 
-// Endpoint v2 - Evoluído (Contrato v2)
 app.MapGet("/api/v2/pedidos/{id:guid}/resumo", async (Guid id, PedidoConsultaService service) =>
 {
     var resumoV1 = await service.ObterResumoCompiladoAsync(id);

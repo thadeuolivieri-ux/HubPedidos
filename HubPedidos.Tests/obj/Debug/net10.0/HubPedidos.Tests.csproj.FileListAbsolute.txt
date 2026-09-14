@@ -144,3 +144,11 @@
 /workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
 /workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.Extensions.FileProviders.Abstractions.dll
 /workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.Extensions.Hosting.Abstractions.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.Connections.Abstractions.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.Http.Connections.Client.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.Http.Connections.Common.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.SignalR.Client.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.SignalR.Client.Core.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.SignalR.Common.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+/workspaces/HubPedidos/HubPedidos.Tests/bin/Debug/net10.0/Microsoft.Extensions.Features.dll
