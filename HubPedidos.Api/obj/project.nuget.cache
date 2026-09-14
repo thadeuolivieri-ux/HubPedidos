@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "y/eqCNx3lxs=",
+  "success": true,
+  "projectFilePath": "/workspaces/HubPedidos/HubPedidos.Api/HubPedidos.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.openapi/10.0.11/microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.openapi/2.7.5/microsoft.openapi.2.7.5.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,12 @@
+/workspaces/HubPedidos/HubPedidos.Domain/bin/Debug/net10.0/HubPedidos.Domain.deps.json
+/workspaces/HubPedidos/HubPedidos.Domain/bin/Debug/net10.0/HubPedidos.Domain.dll
+/workspaces/HubPedidos/HubPedidos.Domain/bin/Debug/net10.0/HubPedidos.Domain.pdb
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.AssemblyInfoInputs.cache
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.AssemblyInfo.cs
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.csproj.CoreCompileInputs.cache
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.sourcelink.json
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.dll
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/refint/HubPedidos.Domain.dll
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.pdb
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/ref/HubPedidos.Domain.dll

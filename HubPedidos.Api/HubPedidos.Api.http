@@ -1,0 +1,6 @@
+@HubPedidos.Api_HostAddress = http://localhost:5019
+
+GET {{HubPedidos.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

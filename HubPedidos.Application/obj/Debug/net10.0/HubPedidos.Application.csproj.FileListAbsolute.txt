@@ -1,0 +1,16 @@
+/workspaces/HubPedidos/HubPedidos.Application/bin/Debug/net10.0/HubPedidos.Application.deps.json
+/workspaces/HubPedidos/HubPedidos.Application/bin/Debug/net10.0/HubPedidos.Application.dll
+/workspaces/HubPedidos/HubPedidos.Application/bin/Debug/net10.0/HubPedidos.Application.pdb
+/workspaces/HubPedidos/HubPedidos.Application/bin/Debug/net10.0/HubPedidos.Domain.dll
+/workspaces/HubPedidos/HubPedidos.Application/bin/Debug/net10.0/HubPedidos.Domain.pdb
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.csproj.AssemblyReference.cache
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.AssemblyInfoInputs.cache
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.AssemblyInfo.cs
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.csproj.CoreCompileInputs.cache
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.sourcelink.json
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedid.4A1E2B06.Up2Date
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.dll
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/refint/HubPedidos.Application.dll
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/HubPedidos.Application.pdb
+/workspaces/HubPedidos/HubPedidos.Application/obj/Debug/net10.0/ref/HubPedidos.Application.dll
