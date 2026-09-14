@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HubPedidos.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07c747296a29b34c543c9b9d985566fc42b0538e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d89ea51019a9839c3c554f72cb9415db57fbeb3")]
 [assembly: System.Reflection.AssemblyProductAttribute("HubPedidos.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HubPedidos.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
