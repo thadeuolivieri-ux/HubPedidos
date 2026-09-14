@@ -10,3 +10,4 @@
 /workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/refint/HubPedidos.Domain.dll
 /workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.pdb
 /workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/ref/HubPedidos.Domain.dll
+/workspaces/HubPedidos/HubPedidos.Domain/obj/Debug/net10.0/HubPedidos.Domain.csproj.AssemblyReference.cache

@@ -4,13 +4,20 @@ using HubPedidos.Domain.ValueObjects;
 
 public class Pedido
 {
-    public PedidoId Id { get; }
-    private readonly List<ItemPedido> _itens;
+    public PedidoId Id { get; private set; }
+    private readonly List<ItemPedido> _itens = new();
     public IReadOnlyCollection<ItemPedido> Itens => _itens.AsReadOnly();
-    public string Regiao { get; }
-    public int Prioridade { get; }
+    public string Regiao { get; private set; }
+    public int Prioridade { get; private set; }
+    public Endereco? EnderecoEntrega { get; private set; }
 
-    public Pedido(PedidoId id, IEnumerable<ItemPedido> itens, string regiao, int prioridade)
+    // Construtor sem parâmetros para EF Core
+    private Pedido() 
+    { 
+        Regiao = string.Empty;
+    }
+
+    public Pedido(PedidoId id, IEnumerable<ItemPedido> itens, string regiao, int prioridade, Endereco? enderecoEntrega = null)
     {
         var listaItens = itens?.ToList() ?? new List<ItemPedido>();
 
@@ -25,6 +32,7 @@ public class Pedido
         _itens = listaItens;
         Regiao = regiao;
         Prioridade = prioridade;
+        EnderecoEntrega = enderecoEntrega;
     }
 
     public decimal ValorTotal => _itens.Sum(i => i.ValorTotal);

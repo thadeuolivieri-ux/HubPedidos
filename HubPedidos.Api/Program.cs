@@ -1,13 +1,20 @@
+using HubPedidos.Application.Data;
 using HubPedidos.Application.DTOs;
 using HubPedidos.Application.Mappers;
 using HubPedidos.Application.Services;
 using HubPedidos.Domain.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<CatalogoProcessadores>();
+
+builder.Services.AddDbContext<HubPedidosDbContext>(options =>
+    options.UseSqlite("Data Source=hubpedidos.db"));
+
+builder.Services.AddScoped<PedidoConsultaService>();
 
 var app = builder.Build();
 
@@ -41,6 +48,18 @@ app.MapPost("/api/pedidos/processar", (CriarPedidoRequest request, CatalogoProce
     {
         return Results.UnprocessableEntity(new { erro = ex.Message });
     }
+});
+
+app.MapGet("/api/pedidos/painel", async (PedidoConsultaService service, int pagina = 1, int tamanho = 10, string? regiao = null) =>
+{
+    var resultado = await service.ListarPaginadoAsync(pagina, tamanho, regiao);
+    return Results.Ok(resultado);
+});
+
+app.MapGet("/api/pedidos/{id:guid}/resumo-compilado", async (Guid id, PedidoConsultaService service) =>
+{
+    var resumo = await service.ObterResumoCompiladoAsync(id);
+    return resumo is not null ? Results.Ok(resumo) : Results.NotFound();
 });
 
 app.Run();
